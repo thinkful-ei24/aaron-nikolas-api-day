@@ -6,17 +6,29 @@ const api = (function () {
   const getItems = function (callback) {
 
     $.getJSON(`${BASE_URL}/items`, (response) => {
-      console.log(response);
+      callback(response);
     });
 
   };
 
+  const updateItem = function (id, updateData, callback) {
+    $.ajax({
+      url: `${BASE_URL}/items/${id}`,
+      method: 'PATCH',
+      contentType: 'application/json',
+      data: JSON.stringify(updateData),
+      success: function(data) {
+        callback(data);  //on success run a function with the successful message 
+      }
+    });
+  };
 
   const createItem = function (name, callback) {
     let newItem = {
       name: name
     };
 
+  
     
 
     $.ajax({
@@ -38,7 +50,8 @@ const api = (function () {
 
   return {
     getItems,
-    createItem
+    createItem,
+    updateItem
   };
 
 }());

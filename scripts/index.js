@@ -5,17 +5,25 @@
 $(document).ready(function() {
   shoppingList.bindEventListeners();
   shoppingList.render();
-  api.getItems();
   api.createItem('pears', (newItem) => {
     api.getItems((items) => {
       console.log(items);
     });
   });
+  api.getItems((items) => {
+    items.forEach((item) => store.addItem(item));
+    const item = store.items[0];
+    console.log('current name: ' + item.name);
+    store.findAndUpdate(item.id, { name: 'head' });
+    console.log('new name: ' + item.name);
+    shoppingList.render();
+  });
+  
 });
 
 
 
-store.items.push(Item.create('apples'));
+
 
 
 // $.getJSON('https://thinkful-list-api.herokuapp.com/ei-student/items', (response) => {
