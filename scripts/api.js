@@ -11,7 +11,7 @@ const api = (function () {
 
   };
 
-  const updateItem = function (id, updateData, callback) {
+  const updateItem = function (id, updateData, callback, callback2) {
     $.ajax({
       url: `${BASE_URL}/items/${id}`,
       method: 'PATCH',
@@ -19,6 +19,19 @@ const api = (function () {
       data: JSON.stringify(updateData),
       success: function(data) {
         callback(data);  //on success run a function with the successful message 
+      },
+      error: function(data) {
+        callback(data);
+      }
+    });
+  };
+
+  const deleteItem = function (id, callback) {
+    $.ajax({
+      url: `${BASE_URL}/items/${id}`,
+      method: 'DELETE',
+      success: function(data) {
+        callback(data);
       }
     });
   };
@@ -29,15 +42,12 @@ const api = (function () {
     };
 
   
-    
-
     $.ajax({
       url: `${BASE_URL}/items`,
       method: 'POST',
       contentType: 'application/json',
       data: JSON.stringify(newItem),
       success: function(data) {
-        console.log(data);
         callback(data);
       }
     });
@@ -51,7 +61,8 @@ const api = (function () {
   return {
     getItems,
     createItem,
-    updateItem
+    updateItem,
+    deleteItem
   };
 
 }());

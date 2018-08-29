@@ -2,23 +2,19 @@
 
 /* global shoppingList, store */
 
-$(document).ready(function() {
+$(document).ready(function () {
   shoppingList.bindEventListeners();
   shoppingList.render();
-  api.createItem('pears', (newItem) => {
-    api.getItems((items) => {
-      console.log(items);
-    });
-  });
+  // api.createItem('pears', (newItem) => {
+  //   api.getItems((items) => {
+  //     console.log(items);
+  //   });
+  // });
   api.getItems((items) => {
     items.forEach((item) => store.addItem(item));
-    const item = store.items[0];
-    console.log('current name: ' + item.name);
-    store.findAndUpdate(item.id, { name: 'head' });
-    console.log('new name: ' + item.name);
     shoppingList.render();
   });
-  
+
 });
 
 
