@@ -1,3 +1,5 @@
+'use strict';
+
 /* global shoppingList, store */
 
 $(document).ready(function() {
